@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  go-greeter:
+    build:
+      context: ./go-greeter
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    restart: always
+    networks:
+      - app-network
+
+  django-client:
+    build:
+      context: .
+      dockerfile: django_client/Dockerfile
+    ports:
+      - "8000:8000"
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      - go-greeter
+
+networks:
+  app-network:
+    driver: bridge
