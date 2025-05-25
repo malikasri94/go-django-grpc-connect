@@ -10,7 +10,7 @@ def hello_view(request):
     name = request.GET.get("name", "World")
 
     # Connect to gRPC server
-    with grpc.insecure_channel("go-greeter:50051") as channel:
+    with grpc.insecure_channel("go-service.internal.golang-django-hello.local:50051") as channel:
         stub = greet_pb2_grpc.GreeterStub(channel)
         response = stub.SayHello(greet_pb2.HelloRequest(name=name))
 
